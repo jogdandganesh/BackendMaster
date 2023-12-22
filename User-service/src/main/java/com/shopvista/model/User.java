@@ -13,6 +13,8 @@ public class User {
 	private int userId;
 	private String email;
 	private String password;
+	private int orderId;
+	private int cartId;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private UserAddress adr;

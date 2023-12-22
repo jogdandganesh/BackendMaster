@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class UserDto {
 
+	public static String sub="Shopvista login Credentials \n ";
 	private int userId;
 	private String email;
 	private String password;
@@ -15,4 +16,9 @@ public class UserDto {
 	private String landmark;
 	private String flatNo;
 	private String apartment;
+	private int orderId;
+	private int cartId;
+//	private int orderId;
+	//private int userId;
+	//product
 }

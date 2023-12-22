@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shopvista.dto.UserDto;
 import com.shopvista.model.User;
+import com.shopvista.service.MailService;
 import com.shopvista.service.UserService;
 
 @RestController
@@ -24,6 +25,8 @@ public class UserController {
 	
 	@Autowired
 	private UserService userServ;
+	@Autowired
+	private MailService mail;
 
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> getAllUser(){
@@ -34,6 +37,7 @@ public class UserController {
 	@PostMapping("/user")
 	public ResponseEntity<User> saveUser(@RequestBody UserDto user){
 		User userData = userServ.saveUserData(user);
+		mail.sendMails(user.getEmail(),user.sub,user.getPassword());
 		return ResponseEntity.status(HttpStatus.CREATED).body(userData);
 	}
 	
@@ -53,7 +57,6 @@ public class UserController {
 	public ResponseEntity<String> userLogin(@PathVariable String email,@PathVariable String password){
 		String loginCheck = userServ.loginCheck(email,password);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(loginCheck);
-		
 	}
 	
 	

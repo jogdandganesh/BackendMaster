@@ -28,9 +28,10 @@ public class UserServiceImpl implements UserService {
 	public User saveUserData(UserDto user) {
 		if (user != null) {
 			UserAddress address = mapper.map(user, UserAddress.class);
-			User userData = mapper.map(user, User.class);;
+			User userData = mapper.map(user, User.class);
+			userData.setAdr(address);
 			User usr = repository.save(userData);
-			addressRepository.save(address);
+			//addressRepository.save(address);
 			return usr;
 		} else
 			return new User();
