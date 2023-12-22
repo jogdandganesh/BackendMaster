@@ -1,15 +1,20 @@
 package com.shopvista.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shopvista.model.User;
 import com.shopvista.service.AdminService;
 
 @RestController
@@ -29,6 +34,13 @@ public class AdminController {
 	public ResponseEntity<String> name(@PathVariable String adminEmail, @PathVariable String password  ) {
 	String msg=adminService.checkCredential(adminEmail, password);	
 	return ResponseEntity.status(HttpStatus.OK).body(msg);
+	}
+	
+	@GetMapping("/admin/")
+	public ResponseEntity<User> getAllUser()
+	{
+		List<User> useList=adminService.getAllUser();
+		return ResponseEntity.status(HttpStatus.FOUND).body(null);
 	}
 	
 	
