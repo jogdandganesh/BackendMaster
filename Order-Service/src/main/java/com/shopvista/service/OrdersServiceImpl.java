@@ -1,5 +1,8 @@
 package com.shopvista.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +13,7 @@ import com.shopvista.model.Order;
 import com.shopvista.model.Payment;
 
 @Service
-public class OrdersImpl implements OrdersService {
+public class OrdersServiceImpl implements OrdersService {
 
 	@Autowired
 	private OrderRepository orderRepository;
@@ -22,15 +25,14 @@ public class OrdersImpl implements OrdersService {
 	
 
 	@Override
-	public Order getAllOrders(int userId) {
+	public List<Order> getAllOrders(int userId) {
 		System.out.println("hi"+userId);
 		if (orderRepository.existsByUserId(userId)) {
-			System.out.println("UserId Present");
-			Order order = orderRepository.findByUserId(userId);
+			List<Order> order = orderRepository.findByUserId(userId);
 			System.out.println("Got All Orders");
 			return order;
 		} else {
-			return null;
+			return new ArrayList<>();
 		}
 			
 	}

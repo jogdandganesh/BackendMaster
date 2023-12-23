@@ -33,6 +33,11 @@ public class Order {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Payment payment;
 	
+	
+	private transient Product product;
+	
+	
+	
 
 
 }
