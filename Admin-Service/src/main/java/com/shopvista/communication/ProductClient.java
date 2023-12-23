@@ -2,7 +2,7 @@ package com.shopvista.communication;
 
 import org.springframework.cloud.openfeign.FeignClient;
 
-@FeignClient(url = "http://localhost:8085/product-service")
+@FeignClient(url = "http://localhost:8085/product-service", value = "product-client")
 public interface ProductClient {
 	
 	

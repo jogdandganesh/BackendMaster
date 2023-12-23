@@ -38,12 +38,14 @@ public class AdminController {
 		return "Running";
 	}
 
+	//APi Working 
 	@PostMapping("/admin/{adminEmail},{password}")
 	public ResponseEntity<String> name(@PathVariable String adminEmail, @PathVariable String password  ) {
 	String msg=adminService.checkCredential(adminEmail, password);	
 	return ResponseEntity.status(HttpStatus.OK).body(msg);
 	}
 	
+	//APi Working 
 	@GetMapping("/admin/user")
 	public ResponseEntity<List<User>> getAllUser()
 	{
@@ -51,7 +53,7 @@ public class AdminController {
 	}
 	
 	
-	@PostMapping("/admin/product")
+	@PostMapping("/admin/category")
 	public ResponseEntity<String> addCategory(@RequestBody Category category)
 	{
 		String msg =adminService.addCategory(category);

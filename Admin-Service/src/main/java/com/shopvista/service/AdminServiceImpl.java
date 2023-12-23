@@ -11,6 +11,7 @@ import com.shopvista.communication.ProductClient;
 import com.shopvista.communication.UserClient;
 
 import com.shopvista.dao.AdminRepository;
+import com.shopvista.dao.CategoryRepository;
 import com.shopvista.dto.VerifyProductDto;
 import com.shopvista.model.Category;
 import com.shopvista.model.Product;
@@ -21,6 +22,9 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired
 	public AdminRepository adminRepository;
+	
+	@Autowired
+	public CategoryRepository categoryRepository;
 	
 	@Autowired
 	public ModelMapper modelMapper; 
@@ -44,10 +48,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public String addCategory(Category category) {
-		Product product=new Product();
-		product.setProductCategory(category.getCategaory());
-		product.setSubCategory(category.getSubCategory());
-		adminRepository.save(null);
+		categoryRepository.save(category);
 		return "Category Added";
 	}
 
