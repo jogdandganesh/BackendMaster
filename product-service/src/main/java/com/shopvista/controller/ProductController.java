@@ -71,9 +71,9 @@ public class ProductController {
 	
 	//Product_Category here......................................................................
 	@GetMapping("/product/category/{productCategory}")
-	public ResponseEntity<List<Product>> getAllProductByCategory(@PathVariable String productCategory) {
+	public List<Product> getAllProductByCategory(@PathVariable String productCategory) {
 		List<Product> list = productService.getProductsByCategory(productCategory);
-		return ResponseEntity.status(HttpStatus.OK).body(list);
+		return list;
 	}
 
 	@GetMapping("/product/{subcategory}")
