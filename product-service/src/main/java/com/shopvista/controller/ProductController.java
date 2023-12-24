@@ -1,6 +1,5 @@
 package com.shopvista.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,85 +25,77 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	// get product ........................................................................
+	// get product
+	// ........................................................................
 	@GetMapping("/{ProductId}")
-	public ResponseEntity<Object> getProduct(@PathVariable int ProductId)
-	{
-	  Product product = productService.getProduct(ProductId);
-	  if(product !=null)
-	  {
-		  return new ResponseEntity<Object>(product,HttpStatus.OK);
-	  }else
-	  { 
-			  return new ResponseEntity<Object>("ProductId is not Found"+ProductId,HttpStatus.BAD_REQUEST);
-	  }
-	 }
-			  
-	//delete product .........................................................................
-	
+	public ResponseEntity<Object> getProduct(@PathVariable int ProductId) {
+		Product product = productService.getProduct(ProductId);
+		if (product != null) {
+			return new ResponseEntity<Object>(product, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Object>("ProductId is not Found" + ProductId, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	// delete product
+	// .........................................................................
+
 	@DeleteMapping("/{ProductId}")
-	public ResponseEntity<Product> deleteProduct(@PathVariable int ProductId)
-	{
-		return new ResponseEntity<Product>(productService.deleteProduct(ProductId),HttpStatus.OK);
+	public ResponseEntity<Product> deleteProduct(@PathVariable int ProductId) {
+		return new ResponseEntity<Product>(productService.deleteProduct(ProductId), HttpStatus.OK);
 	}
-	
-	//update product .............................................................................
-	
+
+	// update product
+	// .............................................................................
+
 	@PutMapping("/product")
-	public ResponseEntity<Object> updateProduct(@RequestBody ProductDTO product)
-	{
+	public ResponseEntity<Object> updateProduct(@RequestBody ProductDTO product) {
 		productService.saveProduct(product);
-		return new ResponseEntity<Object>("Product Status Updated",HttpStatus.ACCEPTED);
+		return new ResponseEntity<Object>("Product Status Updated", HttpStatus.ACCEPTED);
 	}
-	 
-	
-	//productDTO.....................................................................
+
+	// productDTO.....................................................................
 	@PostMapping("/product")
-	public ResponseEntity<Object> saveProduct(@RequestBody ProductDTO product){
-		Object productData =productService.saveProduct(product);
+	public ResponseEntity<Object> saveProduct(@RequestBody ProductDTO product) {
+		Object productData = productService.saveProduct(product);
 		return ResponseEntity.status(HttpStatus.FOUND).body(productData);
 	}
-	
-	
 
-	//get all product details.................................................................
+	// get all product.............................................................
 	@GetMapping("/products")
-	public  List<Product> getAllProduct(){
+	public List<Product> getAllProduct() {
 		return productService.getAllProduct();
-		
+
 	}
-	
 
 	
-	@GetMapping("/products/category/{productCategory}")
-	public  ResponseEntity<List<Product>> getAllProductByCategory(@PathVariable String productCategory){
-		System.out.println(productCategory);
+
+	//Product_Category here......................................................................
+	@GetMapping("/product/category/{productCategory}")
+	public ResponseEntity<List<Product>> getAllProductByCategory(@PathVariable String productCategory) {
 		List<Product> list = productService.getProductsByCategory(productCategory);
-		return ResponseEntity.status(HttpStatus.FOUND).body(list);
+		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
-	
-	
 	@GetMapping("/product/{subcategory}")
-	public ResponseEntity<List<Product>> getALlProductBySubCategory(@PathVariable String subcategory){
+	public ResponseEntity<List<Product>> getALlProductBySubCategory(@PathVariable String subcategory) {
 		List<Product> productList = productService.findProductBySubCategory(subcategory);
-		return ResponseEntity.status(HttpStatus.FOUND).body(productList);
+		return ResponseEntity.status(HttpStatus.OK).body(productList);
 	}
-	
+
 	@GetMapping("/products/{name}")
-	public ResponseEntity<List<Product>> getProductByNameLike(@PathVariable String name){
+	public ResponseEntity<List<Product>> getProductByNameLike(@PathVariable String name) {
 		List<Product> productList = productService.getProductByName(name);
-		return ResponseEntity.status(HttpStatus.FOUND).body(productList);
+		return ResponseEntity.status(HttpStatus.OK).body(productList);
 	}
 	
 	
-
-	
-
-		
+	//Product_Verification here..................................................................................
+	@PostMapping("/verify/{productId}")
+	public ResponseEntity<String> productVerification(@PathVariable int productId){
+		String message = productService.verifyProduct(productId);
+		return ResponseEntity.status(HttpStatus.OK).body(message);
 	}
 	
-	 
 	
-
 	
-
+}
