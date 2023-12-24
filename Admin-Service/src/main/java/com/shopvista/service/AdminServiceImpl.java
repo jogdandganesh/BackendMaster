@@ -12,6 +12,7 @@ import com.shopvista.communication.UserClient;
 
 import com.shopvista.dao.AdminRepository;
 import com.shopvista.dao.CategoryRepository;
+import com.shopvista.dto.AddProductsInCategoryDto;
 import com.shopvista.dto.VerifyProductDto;
 import com.shopvista.model.Category;
 import com.shopvista.model.Product;
@@ -55,15 +56,15 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Boolean verifyProduct(VerifyProductDto verifyProductDto) {
-		Product product=modelMapper.map(verifyProductDto, Product.class);
-		if(product.getAvailability()!=null && product.getProductPrice()!=0.0d)	
-		{
-			return true;
-		}
-		else 
-		return false;
+	public List<Product> addProductsInCategory(AddProductsInCategoryDto addProductsDto) {
+		Category category=modelMapper.map(addProductsDto, Category.class);
+		ResponseEntity<List<Product>> allProductByCategory = productClient.getAllProductByCategory(addProductsDto.getCategoryName());
+		//category.setProductList(allProductByCategory);
+		categoryRepository.save(category);
+		return null;
 	}
+
+	
 
 	
 	

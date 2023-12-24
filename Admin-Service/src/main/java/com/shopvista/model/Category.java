@@ -2,6 +2,8 @@ package com.shopvista.model;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,6 @@ public class Category {
 	private String subCategory;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private transient List<Product> productList;
+	private List<Product> productList;
 
 }

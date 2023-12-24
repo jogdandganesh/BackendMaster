@@ -1,7 +1,7 @@
 package com.shopvista.controller;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shopvista.communication.ProductClient;
 import com.shopvista.communication.UserClient;
+import com.shopvista.dao.CategoryRepository;
+import com.shopvista.dto.AddProductsInCategoryDto;
 import com.shopvista.dto.VerifyProductDto;
 import com.shopvista.model.Category;
 import com.shopvista.model.Product;
@@ -65,24 +67,20 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(msg);
 	}
 	
-	//Building in Process
-	@GetMapping("/admin/product")
-	public ResponseEntity<Object> verifyProduct(@RequestBody VerifyProductDto verifyProductDto)
-	{
-		boolean flag=adminService.verifyProduct(verifyProductDto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(flag);
-	}
+	
+	
 	
 	//API Working
 	@GetMapping("/admin/products")
 	public ResponseEntity<List<Product>> getAllProduct()
 	{
 		List<Product> allProduct = productClient.getAllProduct();
+		//allProduct.stream().allMatch(AdminController::verifyProduct).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(allProduct);
 		
 	}
 	
-	//API Not Working
+	//API Working
 	@GetMapping("/products/{productCategory}")
 	public ResponseEntity<List<Product>> sortProductByCategoeyWise(@PathVariable String productCategory)
 	{
@@ -91,6 +89,13 @@ public class AdminController {
 	}
 	
 	
+	@PostMapping("/products/category")
+	public ResponseEntity<Category> addProductsInCategory(@RequestBody AddProductsInCategoryDto addProductsDto)
+	{
+		ResponseEntity<List<Product>> sortProductByCategoeyWise = this.sortProductByCategoeyWise(addProductsDto.getCategoryName());
+		List<Product> list = adminService.addProductsInCategory(addProductsDto);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
+	}
 	
 	
 }
