@@ -30,14 +30,7 @@ public class Product {
 	private Boolean verification;
 	private String subcategory;
 	
-//	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-//	@JoinTable(name = "product_productImages",
-//	joinColumns = {
-//			@JoinColumn(name = "product_id")
-//	},
-//	inverseJoinColumns = {
-//	@JoinColumn(name = "image_id")
-//	})
+
 	@OneToMany(cascade = CascadeType.ALL)
 	 private List<ProductImages> images;
 	

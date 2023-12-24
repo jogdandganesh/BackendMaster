@@ -58,10 +58,7 @@ public class ProductDTO {
 	@Lob
 	private byte[] images;
 //.................................//
-	public void setProductimages(List<ProductImages> images2) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	
 	

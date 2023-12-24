@@ -3,6 +3,7 @@ package com.shopvista.service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -109,9 +110,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product updateProduct(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+	public String verifyProduct(int productId) {
+		if(productRepository.existsById(productId)) {
+			Optional<Product> product = productRepository.findById(productId);
+			product.get().setVerification(true);
+			return "Product Verified Succesfully";
+		}
+		else
+			return "Product is Not verified";
+		
 	}
 
 }
