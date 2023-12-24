@@ -7,15 +7,11 @@ import com.shopvista.model.Product;
 
 public interface ProductService {
 
+	Object saveProduct(ProductDTO productDescDto);
 	
-
-	Product getProduct(int productId);
-
 	Product deleteProduct(int productId);
 
-//	productDescription:::
-
-	Object saveProduct(ProductDTO productDescDto);
+	Product getProduct(int productId);
 
 	List<Product> getAllProduct();
 
@@ -25,6 +21,6 @@ public interface ProductService {
 
 	List<Product> getProductByName(String name);
 
-	Product updateProduct(Product product);
+	public	String verifyProduct(int productId);
 
 }
