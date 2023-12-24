@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Address {
 	
 	private int addressId;
-	private String apartment;
+	private String buildingName;
 	private String street;
 	private String landmark;
 	private String city;

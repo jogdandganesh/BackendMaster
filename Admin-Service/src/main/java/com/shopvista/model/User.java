@@ -18,13 +18,13 @@ import lombok.NoArgsConstructor;
 public class User {
 	
 	
-	private int UserId;
-	private Long MobileNo;
-	private String Email;
+	private int userId;
+	private Long mobileNo;
+	private String email;
 	private List<Integer> orderIds;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	private transient Address adr;
+	private transient Address address;
 
 
 }

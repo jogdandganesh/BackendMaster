@@ -12,7 +12,7 @@ public class Manufacturer {
 	private int manufacturerId;
 	private String manufacturerName;
 	private String manufacturerAddress;
-	private String mailId;
+	private String manufacturerMailId;
 	private String productCategory;
 
 

@@ -76,11 +76,14 @@ public class ProductController {
 	
 
 	
-	@PostMapping("/{productCategory}")
+	@GetMapping("/products/category/{productCategory}")
 	public  ResponseEntity<List<Product>> getAllProductByCategory(@PathVariable String productCategory){
+		System.out.println(productCategory);
 		List<Product> list = productService.getProductsByCategory(productCategory);
 		return ResponseEntity.status(HttpStatus.FOUND).body(list);
 	}
+	
+	
 	@GetMapping("/product/{subcategory}")
 	public ResponseEntity<List<Product>> getALlProductBySubCategory(@PathVariable String subcategory){
 		List<Product> productList = productService.findProductBySubCategory(subcategory);

@@ -26,8 +26,8 @@ public class Admin {
 	private String password;
 	
 	
-	private transient List<User> user;
-	private transient List<Product> product;
-    private transient List<Manufacturer> manufacturer;
+	private transient List<User> userList;
+	private transient List<Product> productList;
+    private transient List<Manufacturer> manufacturerList;
 
 }

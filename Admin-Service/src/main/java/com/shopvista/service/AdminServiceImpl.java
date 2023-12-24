@@ -27,10 +27,12 @@ public class AdminServiceImpl implements AdminService{
 	public CategoryRepository categoryRepository;
 	
 	@Autowired
-	public ModelMapper modelMapper; 
+	public ProductClient productClient;
 	
 	@Autowired
-	public ProductClient productClient;
+	public ModelMapper modelMapper; 
+	
+	
 	
 	
 
@@ -63,6 +65,7 @@ public class AdminServiceImpl implements AdminService{
 		return false;
 	}
 
+	
 	
 	
 

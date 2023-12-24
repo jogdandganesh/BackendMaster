@@ -15,7 +15,7 @@ public class VerifyProductDto {
 	private double productPrice;
 	private Boolean availability;
 	private Boolean verification;
-	private ProductImages imgs;
+	private ProductImages imges;
 	private String productSize;
 	private String productColor;
 	private String productBrand;

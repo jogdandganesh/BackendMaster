@@ -16,7 +16,7 @@ public class Product {
 	private Boolean availability;
 	private Boolean verification;
 	private String subCategory;
-	private ProductImages imgs; 
+	private ProductImages imges; 
 	private ProductDescription  productDescription;
 	private Manufacturer manufacturer;
 	private Review productReview;
