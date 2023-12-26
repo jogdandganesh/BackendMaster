@@ -2,6 +2,7 @@ package com.shopvista.controller;
 
 import java.util.List;
 
+
 import org.bouncycastle.asn1.ocsp.ResponderID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,27 +40,27 @@ public class OrdersController {
 	
 
 	@GetMapping("/order/user/{userId}")
-	public ResponseEntity<Order> getAllOrdersOfUsers(@PathVariable int userId)
+	public ResponseEntity<Object> getAllOrdersOfUsers(@PathVariable int userId)
 	{
 		System.out.println(userId);
-		Order allOrders=orderService.getAllOrders(userId);
-		if(allOrders!=null) {
-			System.out.println(allOrders);
+		List<Order> allOrders=orderService.getAllOrders(userId);
+		
+		if(!allOrders.isEmpty()) 
 		return new ResponseEntity<>(allOrders, HttpStatus.FOUND);
-		}
+		
 		else
-			return new ResponseEntity<>(allOrders, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("Orders not found with given userId", HttpStatus.NOT_FOUND);
 			
 	}
 	
 	@GetMapping("/order/{orderId}")
-	public ResponseEntity<Order> getOrderByOrderId(@PathVariable int orderId)
+	public ResponseEntity<Object> getOrderByOrderId(@PathVariable int orderId)
 	{
 		Order order=orderService.getOrderByOrderId(orderId);
 		if(order!=null)
-		return new ResponseEntity<Order>(order, HttpStatus.FOUND);
+		return new ResponseEntity<Object>(order, HttpStatus.FOUND);
 		else
-			return new ResponseEntity<Order>(order, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>("Order not found with given OrderId", HttpStatus.NOT_FOUND);
 			
 	}
 	
@@ -70,7 +71,7 @@ public class OrdersController {
 		if(order!=null)
 		return new ResponseEntity<>("Deleted", HttpStatus.FOUND);
 		else
-			return new ResponseEntity<>("Order not Found", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("Order not Found with given orderId", HttpStatus.NOT_FOUND);
 			
 	}
 	
@@ -81,4 +82,6 @@ public class OrdersController {
 		Order orders=orderService.placeOrder(order);
 		return ResponseEntity.status(HttpStatus.CREATED).body(orders);
 	}
+	
+	
 }
