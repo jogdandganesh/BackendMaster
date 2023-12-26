@@ -73,7 +73,7 @@ public class AdminController {
 	}
 	
 	//API Working
-	@GetMapping("admin/categories/")
+	@GetMapping("admin/categories")
 	public ResponseEntity<List<Category>> getCategory(){
 		List<Category> categoryList=adminService.getCategory();
 		return ResponseEntity.status(HttpStatus.OK).body(categoryList);

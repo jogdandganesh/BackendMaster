@@ -1,5 +1,7 @@
 package com.shopvista.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,14 +14,14 @@ public class Product {
 	private int productId;
 	private String productName;
 	private double productPrice;
-	private String productCategory;
 	private Boolean availability;
 	private Boolean verification;
-	private String subCategory;
-	private ProductImages imges; 
+	
+	private Category category;
+	private List<ProductImages> imageList; 
 	private ProductDescription  productDescription;
 	private Manufacturer manufacturer;
-	private Review productReview;
+	private List<Review> review;
 
 
 }

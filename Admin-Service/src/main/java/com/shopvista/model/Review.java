@@ -12,10 +12,11 @@ public class Review {
 	private int ratingId;
 	private int userId;
 	private String review;
-	private Byte[] images;
+	private Byte[] image;
 
 
 }
+
 
 
 

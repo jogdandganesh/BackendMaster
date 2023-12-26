@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public String checkCredential(String adminEmail, String password) {
 		System.out.println(adminEmail+"  "+password);
-		if(adminEmail.equals(adminEmail) && password.equals(password))
+		if(adminEmail.equals("admin") && password.equals("admin@123"))
 		{
 			System.out.println(adminEmail+"  "+password);
 			return "LoginSucessfull";

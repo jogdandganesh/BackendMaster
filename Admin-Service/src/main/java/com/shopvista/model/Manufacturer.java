@@ -13,7 +13,7 @@ public class Manufacturer {
 	private String manufacturerName;
 	private String manufacturerAddress;
 	private String manufacturerMailId;
-	private String productCategory;
+	
 
 
 }
