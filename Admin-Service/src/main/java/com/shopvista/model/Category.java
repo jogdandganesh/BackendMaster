@@ -25,10 +25,10 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int categoryId;
-	private String category;
-	private String subCategory;
+	private String categoryName;
+	private String subcategory;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Product> productList;
+	private transient List<Product> productList;
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,26 +40,30 @@ public class AdminController {
 	@Autowired
 	private ProductClient productClient;
 	
+	//==========================****Login Work****=======================================================
 	@GetMapping("/get")
 	public String check()
 	{
 		return "Running";
 	}
 
-	//APi Working 
+	//API Working 
 	@PostMapping("/admin/{adminEmail},{password}")
 	public ResponseEntity<String> name(@PathVariable String adminEmail, @PathVariable String password  ) {
 	String msg=adminService.checkCredential(adminEmail, password);	
 	return ResponseEntity.status(HttpStatus.OK).body(msg);
 	}
 	
-	//APi Working 
+	//============================****User Work****=======================================================
+	
+	//API Working 
 	@GetMapping("/admin/user")
 	public ResponseEntity<List<User>> getAllUser()
 	{
 		return userClient.getAllUsers();
 	}
 	
+	//========================****Category Work****=======================================================
 	//API Working
 	@PostMapping("/admin/category")
 	public ResponseEntity<String> addCategory(@RequestBody Category category)
@@ -67,16 +72,32 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(msg);
 	}
 	
+	//API Working
+	@GetMapping("admin/categories/")
+	public ResponseEntity<List<Category>> getCategory(){
+		List<Category> categoryList=adminService.getCategory();
+		return ResponseEntity.status(HttpStatus.OK).body(categoryList);
+	}
+	
+	//API Working
+	@DeleteMapping("admin/category/{categoryId}")
+	public ResponseEntity<String> deleteCategory(@PathVariable int categoryId)
+	{
+		String msg=adminService.deleteCategory(categoryId);
+		return ResponseEntity.status(HttpStatus.OK).body(msg);
+	}
 	
 	
+	//=========================================****Product Works****=====================================
 	
 	//API Working
 	@GetMapping("/admin/products")
 	public ResponseEntity<List<Product>> getAllProduct()
 	{
+		
 		List<Product> allProduct = productClient.getAllProduct();
-		//allProduct.stream().allMatch(AdminController::verifyProduct).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(allProduct);
+		
 		
 	}
 	
@@ -84,18 +105,24 @@ public class AdminController {
 	@GetMapping("/products/{productCategory}")
 	public ResponseEntity<List<Product>> sortProductByCategoeyWise(@PathVariable String productCategory)
 	{
-		return productClient.getAllProductByCategory(productCategory);
-		
+		List<Product> allProductByCategory = productClient.getAllProductByCategory(productCategory);
+		return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
 	}
 	
-	
-	@PostMapping("/products/category")
-	public ResponseEntity<Category> addProductsInCategory(@RequestBody AddProductsInCategoryDto addProductsDto)
+	//API Working
+	@GetMapping("/products/category")
+	public ResponseEntity<Category> addProductsInCategory(@RequestBody Category category)
 	{
-		ResponseEntity<List<Product>> sortProductByCategoeyWise = this.sortProductByCategoeyWise(addProductsDto.getCategoryName());
-		List<Product> list = adminService.addProductsInCategory(addProductsDto);
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+	List<Product> allProductByCategory = productClient.getAllProductByCategory(category.getCategoryName());
+		category.setProductList(allProductByCategory);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(category);
 	}
+	
+	
+	
+	
+	
 	
 	
 }

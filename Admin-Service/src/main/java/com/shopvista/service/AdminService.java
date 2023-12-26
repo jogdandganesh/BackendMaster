@@ -16,7 +16,11 @@ public interface AdminService {
 
 	String addCategory(Category category);
 
-	List<Product> addProductsInCategory(AddProductsInCategoryDto addProductsDto);
+	List<Category> getCategory();
+
+	String deleteCategory(int categoryId);
+
+	//List<Product> addProductsInCategory(AddProductsInCategoryDto addProductsDto);
 
 	
 	

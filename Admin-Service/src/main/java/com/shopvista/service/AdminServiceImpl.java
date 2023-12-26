@@ -2,6 +2,7 @@ package com.shopvista.service;
 
 import java.util.List;
 
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -56,13 +57,22 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Product> addProductsInCategory(AddProductsInCategoryDto addProductsDto) {
-		Category category=modelMapper.map(addProductsDto, Category.class);
-		ResponseEntity<List<Product>> allProductByCategory = productClient.getAllProductByCategory(addProductsDto.getCategoryName());
-		//category.setProductList(allProductByCategory);
-		categoryRepository.save(category);
-		return null;
+	public List<Category> getCategory() {
+		List<Category> categoryList = categoryRepository.findAll();
+		return categoryList;
 	}
+
+	@Override
+	public String deleteCategory(int categoryId) {
+		if(categoryRepository.existsById(categoryId))
+		{
+			categoryRepository.deleteById(categoryId);
+			return "Category Deleted Successfully";
+		}
+		return "Category Not Found";
+	}
+
+
 
 	
 

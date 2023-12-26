@@ -34,7 +34,6 @@ public class Order {
 	private Payment payment;
 	
 	
-	private transient Product product;
 	
 	
 	

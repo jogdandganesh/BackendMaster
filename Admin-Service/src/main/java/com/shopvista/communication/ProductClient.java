@@ -19,5 +19,5 @@ public interface ProductClient {
 	public  List<Product> getAllProduct();
 	
 	@GetMapping("/product/category/{productCategory}")
-	public  ResponseEntity<List<Product>> getAllProductByCategory(@PathVariable String productCategory);
+	public  List<Product> getAllProductByCategory(@PathVariable String productCategory);
 }
