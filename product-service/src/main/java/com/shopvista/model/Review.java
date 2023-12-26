@@ -14,6 +14,6 @@ public class Review {
 	private int userId;
 	private String review;
 	@Lob
-	private byte[] productImages;
+	private byte[] image;
 	
 }

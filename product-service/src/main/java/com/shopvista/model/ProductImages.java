@@ -3,6 +3,7 @@ package com.shopvista.model;
 
 
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,16 +19,14 @@ import lombok.NoArgsConstructor;
 public class ProductImages {
 
 	public ProductImages(byte[] images) {
-		// TODO Auto-generated constructor stub
-	}
+			}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int imageId;
 
-	@Lob
-	//@Column(length = 50000000)
-	private byte[] images;
+	//@Lob
+	//private byte[] images;
 
 	
 }
