@@ -8,7 +8,7 @@ import lombok.Data;
 public class ReturnProduct {
 
 	@Id
-	private int ReturnId;
+	private int returnId;
 	private String returnReason;
 	private int productId;
 //	@OneToMany(cascade = CascadeType.ALL)

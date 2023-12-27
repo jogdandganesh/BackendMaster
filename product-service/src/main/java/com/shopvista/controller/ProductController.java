@@ -82,15 +82,6 @@ public class ProductController {
 	public List<Product> getALlProductBySubCategory(@PathVariable String subCategory) {
 				List<Product> subcategoryList = productService.findProductBySubCategory(subCategory);
 				return subcategoryList;
-	@GetMapping("/product/category/{productCategory}")
-	public List<Product> getAllProductByCategory(@PathVariable String productCategory) {
-		List<Product> list = productService.getProductsByCategory(productCategory);
-		return list;
-	}
-	@GetMapping("/product/{subcategory}")
-	public ResponseEntity<List<Product>> getALlProductBySubCategory(@PathVariable String subcategory) {
-		List<Product> productList = productService.findProductBySubCategory(subcategory);
-		return ResponseEntity.status(HttpStatus.OK).body(productList);
 	}
 
 	@GetMapping("/products/{name}")
