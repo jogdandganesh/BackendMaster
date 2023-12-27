@@ -1,6 +1,7 @@
 package com.shopvista.controller;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shopvista.communication.ProductClient;
 import com.shopvista.communication.UserClient;
-import com.shopvista.dao.CategoryRepository;
+
 import com.shopvista.dto.AddProductsInCategoryDto;
 import com.shopvista.dto.VerifyProductDto;
-import com.shopvista.model.Category;
+
 import com.shopvista.model.Product;
 import com.shopvista.model.User;
 import com.shopvista.service.AdminService;
@@ -63,29 +64,6 @@ public class AdminController {
 		return userClient.getAllUsers();
 	}
 	
-	//========================****Category Work****=======================================================
-	//API Working
-	@PostMapping("/admin/category")
-	public ResponseEntity<String> addCategory(@RequestBody Category category)
-	{
-		String msg =adminService.addCategory(category);
-		return ResponseEntity.status(HttpStatus.CREATED).body(msg);
-	}
-	
-	//API Working
-	@GetMapping("admin/categories/")
-	public ResponseEntity<List<Category>> getCategory(){
-		List<Category> categoryList=adminService.getCategory();
-		return ResponseEntity.status(HttpStatus.OK).body(categoryList);
-	}
-	
-	//API Working
-	@DeleteMapping("admin/category/{categoryId}")
-	public ResponseEntity<String> deleteCategory(@PathVariable int categoryId)
-	{
-		String msg=adminService.deleteCategory(categoryId);
-		return ResponseEntity.status(HttpStatus.OK).body(msg);
-	}
 	
 	
 	//=========================================****Product Works****=====================================
@@ -102,22 +80,21 @@ public class AdminController {
 	}
 	
 	//API Working
-	@GetMapping("/products/{productCategory}")
-	public ResponseEntity<List<Product>> sortProductByCategoeyWise(@PathVariable String productCategory)
+	@GetMapping("/products/{categoryName}")
+	public ResponseEntity<List<Product>> sortProductByCategoeyWise(@PathVariable String categoryName)
 	{
-		List<Product> allProductByCategory = productClient.getAllProductByCategory(productCategory);
+		List<Product> allProductByCategory = productClient.getAllProductByCategory(categoryName);
 		return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
 	}
 	
 	//API Working
-	@GetMapping("/products/category")
-	public ResponseEntity<Category> addProductsInCategory(@RequestBody Category category)
-	{
-	List<Product> allProductByCategory = productClient.getAllProductByCategory(category.getCategoryName());
-		category.setProductList(allProductByCategory);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(category);
-	}
+		@GetMapping("/product/{subCategory}")
+		public ResponseEntity<List<Product>> sortProductBySubCategoeyWise(@PathVariable String subCategory)
+		{
+			List<Product> allProductByCategory = productClient.getALlProductBySubCategory(subCategory);
+			return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
+		}
+	
 	
 	
 	
