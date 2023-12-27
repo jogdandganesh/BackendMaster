@@ -8,10 +8,10 @@ import lombok.Data;
 public class ReturnProduct {
 
 	@Id
-	private int productReturnId;
+	private int ReturnId;
 	private String returnReason;
 	private int productId;
 //	@OneToMany(cascade = CascadeType.ALL)
-//	private List<ReturnProductImages> imgs;
+//	private List<ReturnProductImages> image;
 	private String approval;
 }

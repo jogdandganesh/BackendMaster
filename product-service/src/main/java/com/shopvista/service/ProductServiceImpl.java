@@ -1,6 +1,7 @@
 package com.shopvista.service;
 
 import java.util.ArrayList;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.shopvista.dao.ProductRepository;
 import com.shopvista.dto.ProductDTO;
+
 import com.shopvista.model.Manufacturer;
 import com.shopvista.model.Product;
 import com.shopvista.model.ProductDescription;
@@ -24,7 +27,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-
+	
+	
 	@Autowired
 	private ModelMapper mapper;
 
@@ -36,6 +40,8 @@ public class ProductServiceImpl implements ProductService {
 			return null;
 		}
 	}
+	
+	//....................................................................................................
 
 	@Override
 	public Product deleteProduct(int ProductId) {
@@ -58,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 		if (productDescDto != null) {
 			Product product = mapper.map(productDescDto, Product.class);
 
-			ProductDescription description = mapper.map(productDescDto, ProductDescription.class);
+			ProductDescription productDescription = mapper.map(productDescDto, ProductDescription.class);
 
 			Manufacturer manufacturer = mapper.map(productDescDto, Manufacturer.class);
 
@@ -67,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
 			ReturnProduct returnProduct = mapper.map(productDescDto, ReturnProduct.class);
 
 			product.setManufacturer(manufacturer);
-			product.setDescription(description);
+			product.setProductDescription(productDescription);
 
 			productRepository.save(product);
 
@@ -82,23 +88,24 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAllProduct() {
 		List<Product> list = productRepository.findAll();
-		List<Product> newList = list.stream().sorted(Comparator.comparing(Product::getProductCategory))
-				.collect(Collectors.toList());
-		return newList;
+		
+		return list;
 
 	}
 
-	public List<Product> getProductsByCategory(String productCategory) {
-		return productRepository.findByProductCategory(productCategory);
+	public List<Product> getProductsByCategory(String categoryName) {
+		List<Product> productList = this.getAllProduct();
+		List<Product> categoryList = productList.stream().filter(p->p.getCategoryName().equals(categoryName)).collect(Collectors.toList());
+        return categoryList;
 	}
 
 	@Override
-	public List<Product> findProductBySubCategory(String subcategory) {
-		if (productRepository.existsBySubcategory(subcategory)) {
-			List<Product> productList = productRepository.findBySubcategory(subcategory);
-			return productList;
-		} else
-			return new ArrayList<>();
+	public List<Product> findProductBySubCategory(String subCategory) {
+		
+		List<Product> list = this.getAllProduct();
+		List<Product> subCategoryList = list.stream().filter(p->p.getSubCategory().equals(subCategory)).collect(Collectors.toList());
+		System.out.println(subCategoryList);	
+		return subCategoryList;
 	}
 
 	@Override
