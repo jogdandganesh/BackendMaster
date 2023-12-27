@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.introspect.AnnotationCollector;
 import com.shopvista.communication.ProductClient;
 import com.shopvista.communication.UserClient;
 
@@ -95,6 +96,28 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
 		}
 	
+		@GetMapping("product/verify")
+		public List<Product> verifyProduct()
+		{
+			List<Product> productList = productClient.getAllProduct();
+			System.out.println(productList);
+			List<Product> verifiedList = productList.stream().filter(p->p.getProductDescription().getProductBrand()!=null && p.getProductDescription().getProductColor()!=null &&  (p.getProductDescription().getProductSize()!=null && !p.getProductDescription().getProductSize().isEmpty())
+					&& p.getAvailability()==true && p.getProductPrice()!=0.0d).collect(Collectors.toList());
+			
+			return verifiedList;
+		}
+		
+		@GetMapping("/product/verified")
+		public List<Product> getverifiedProduct()
+		{
+			List<Product> verifiedProduct = this.verifyProduct();
+			for(Product prod:verifiedProduct)
+			{
+				prod.setVerification(true);
+			}
+			return verifiedProduct;
+		}
+		
 	
 	
 	
