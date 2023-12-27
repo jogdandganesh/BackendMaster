@@ -3,6 +3,7 @@ package com.shopvista.service;
 import java.util.List;
 
 
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,10 @@ import com.shopvista.communication.ProductClient;
 import com.shopvista.communication.UserClient;
 
 import com.shopvista.dao.AdminRepository;
-import com.shopvista.dao.CategoryRepository;
+
 import com.shopvista.dto.AddProductsInCategoryDto;
 import com.shopvista.dto.VerifyProductDto;
-import com.shopvista.model.Category;
+
 import com.shopvista.model.Product;
 import com.shopvista.model.User;
 
@@ -25,8 +26,7 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	public AdminRepository adminRepository;
 	
-	@Autowired
-	public CategoryRepository categoryRepository;
+	
 	
 	@Autowired
 	public ProductClient productClient;
@@ -50,27 +50,27 @@ public class AdminServiceImpl implements AdminService{
 		return "LoginFail";
 	}
 
-	@Override
-	public String addCategory(Category category) {
-		categoryRepository.save(category);
-		return "Category Added";
-	}
+//	@Override
+//	public String addCategory(Category category) {
+//		categoryRepository.save(category);
+//		return "Category Added";
+//	}
 
-	@Override
-	public List<Category> getCategory() {
-		List<Category> categoryList = categoryRepository.findAll();
-		return categoryList;
-	}
+//	@Override
+//	public List<Category> getCategory() {
+//		List<Category> categoryList = categoryRepository.findAll();
+//		return categoryList;
+//	}
 
-	@Override
-	public String deleteCategory(int categoryId) {
-		if(categoryRepository.existsById(categoryId))
-		{
-			categoryRepository.deleteById(categoryId);
-			return "Category Deleted Successfully";
-		}
-		return "Category Not Found";
-	}
+//	@Override
+//	public String deleteCategory(int categoryId) {
+//		if(categoryRepository.existsById(categoryId))
+//		{
+//			categoryRepository.deleteById(categoryId);
+//			return "Category Deleted Successfully";
+//		}
+//		return "Category Not Found";
+//	}
 
 
 
