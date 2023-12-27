@@ -1,6 +1,7 @@
 package com.shopvista.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -71,6 +72,16 @@ public class ProductController {
 	
 
 	//Product_Category here......................................................................
+
+	@GetMapping("/product/category/{categoryName}")
+	public List<Product> getAllProductByCategory(@PathVariable String categoryName) {
+		return productService.getProductsByCategory(categoryName);
+	}
+
+	@GetMapping("/product/{subCategory}")
+	public List<Product> getALlProductBySubCategory(@PathVariable String subCategory) {
+				List<Product> subcategoryList = productService.findProductBySubCategory(subCategory);
+				return subcategoryList;
 	@GetMapping("/product/category/{productCategory}")
 	public List<Product> getAllProductByCategory(@PathVariable String productCategory) {
 		List<Product> list = productService.getProductsByCategory(productCategory);

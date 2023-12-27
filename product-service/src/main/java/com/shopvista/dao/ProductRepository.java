@@ -7,24 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import com.shopvista.model.Product;
 
-
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-//public List<ProductDTO> findByProductCategory(String productCategory);
-
-
-	public List<Product> findByProductCategory(String productCategory);
-
-	public boolean existsBySubcategory(String subcategory);
-	
-	public List<Product> findBySubcategory(String subcategory);
+   //public List<ProductDTO> findByProductCategory(String productCategory);
 
 	public boolean existsByProductName(String name);
 
 	public List<Product> findByProductName(String name);
-	
-	
-	
-	}
 
+}
