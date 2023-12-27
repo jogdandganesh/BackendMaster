@@ -70,7 +70,9 @@ public class ProductController {
 	}
 
 	
+
 	//Product_Category here......................................................................
+<<<<<<< HEAD
 	@GetMapping("/product/category/{categoryName}")
 	public List<Product> getAllProductByCategory(@PathVariable String categoryName) {
 		return productService.getProductsByCategory(categoryName);
@@ -80,6 +82,17 @@ public class ProductController {
 	public List<Product> getALlProductBySubCategory(@PathVariable String subCategory) {
 				List<Product> subcategoryList = productService.findProductBySubCategory(subCategory);
 				return subcategoryList;
+=======
+	@GetMapping("/product/category/{productCategory}")
+	public List<Product> getAllProductByCategory(@PathVariable String productCategory) {
+		List<Product> list = productService.getProductsByCategory(productCategory);
+		return list;
+	}
+	@GetMapping("/product/{subcategory}")
+	public ResponseEntity<List<Product>> getALlProductBySubCategory(@PathVariable String subcategory) {
+		List<Product> productList = productService.findProductBySubCategory(subcategory);
+		return ResponseEntity.status(HttpStatus.OK).body(productList);
+>>>>>>> c741f9f602c4e417b4e3c51331b2a00892f1ee11
 	}
 
 	@GetMapping("/products/{name}")
