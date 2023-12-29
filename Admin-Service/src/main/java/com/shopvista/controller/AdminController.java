@@ -2,6 +2,7 @@ package com.shopvista.controller;
 
 import java.util.List;
 
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,7 @@ public class AdminController {
 		
 	}
 	
-	//API Working
+	   //API Working
 	@GetMapping("/products/{categoryName}")
 	public ResponseEntity<List<Product>> sortProductByCategoeyWise(@PathVariable String categoryName)
 	{
@@ -88,14 +89,14 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
 	}
 	
-	//API Working
+	    //API Working
 		@GetMapping("/product/{subCategory}")
 		public ResponseEntity<List<Product>> sortProductBySubCategoeyWise(@PathVariable String subCategory)
 		{
 			List<Product> allProductByCategory = productClient.getALlProductBySubCategory(subCategory);
 			return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
 		}
-	//API Working
+	    //API Working
 		@GetMapping("product/verify")
 		public List<Product> verifyProduct()
 		{
@@ -119,6 +120,28 @@ public class AdminController {
 			}
 			return verifiedProduct;
 		}
+		
+		@GetMapping("admin/product/{productId}")
+		public ResponseEntity<Object> getProductByProductId(@PathVariable int productId)
+		{
+			
+			return productClient.getProduct(productId);
+		}
+		
+		@DeleteMapping("/product/{productId}")
+		public ResponseEntity<Product> deleteProductByProductId(@PathVariable int productId) {
+			
+			return productClient.deleteProduct(productId);
+			
+		}
+		
+		@GetMapping("admin/products/{name}")
+		public ResponseEntity<List<Product>> getProductByName(@PathVariable String name)
+		{
+			
+			return productClient.getProductByNameLike(name);
+		}
+		
 		
 	
 	
