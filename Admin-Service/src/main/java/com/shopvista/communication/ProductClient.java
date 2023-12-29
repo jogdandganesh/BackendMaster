@@ -41,6 +41,19 @@ public interface ProductClient {
 	@GetMapping("/products/{name}")
 	public ResponseEntity<List<Product>> getProductByNameLike(@PathVariable String name);
 	
+	@PutMapping("/verify/product")
+	public Product verifyProduct(@RequestBody Product product);
+	
+	@GetMapping("/product/name/{ch}")
+	public List<Product> getProductByNameStartsWith(@PathVariable String ch);
+	
+	@GetMapping("/products/category/{category}")
+	public List<Product> getProductCategoryNameStartsWith(@PathVariable String category);
+	
+	@GetMapping("/subcategory/{subcategory}")
+	public List<Product> getProductSubCategoryNameStartsWith(@PathVariable String subcategory);
+	
+	
 	
 	
 }

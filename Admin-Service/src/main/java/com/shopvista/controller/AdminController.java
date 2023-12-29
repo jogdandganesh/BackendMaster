@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.introspect.AnnotationCollector;
 import com.shopvista.communication.ProductClient;
 import com.shopvista.communication.UserClient;
-
+import com.shopvista.dao.AdminRepository;
 import com.shopvista.dto.AddProductsInCategoryDto;
 import com.shopvista.dto.VerifyProductDto;
 
@@ -68,6 +68,8 @@ public class AdminController {
 	
 	
 	
+	
+	
 	//=========================================****Product Works****=====================================
 	
 	//API Working
@@ -110,16 +112,18 @@ public class AdminController {
 		}
 		
 		//API Working
-		@GetMapping("/product/verified")
-		public List<Product> getverifiedProduct()
-		{
-			List<Product> verifiedProduct = this.verifyProduct();
-			for(Product prod:verifiedProduct)
-			{
-				prod.setVerification(true);
-			}
-			return verifiedProduct;
-		}
+//		@GetMapping("/product/verified")
+//		public List<Product> getverifiedProduct()
+//		{
+//			List<Product> verifiedProduct = this.verifyProduct();
+//			for(Product prod:verifiedProduct)
+//			{
+//				prod.setVerification(true);
+//				productClient.verifyProduct(prod);
+//				
+//			}
+//			return verifiedProduct;
+//		}
 		
 		@GetMapping("admin/product/{productId}")
 		public ResponseEntity<Object> getProductByProductId(@PathVariable int productId)
@@ -142,10 +146,36 @@ public class AdminController {
 			return productClient.getProductByNameLike(name);
 		}
 		
+		@GetMapping("/product/character/{ch}")
+		public List<Product> getProductByNameStartsWith(@PathVariable String ch)
+		{
+			return productClient.getProductByNameStartsWith(ch);
+		}
 		
+		@GetMapping("/product/category/{category}")
+		public List<Product> getProductCategoryNameStartsWith(@PathVariable String category){
+			System.out.println(category);
+			return  productClient.getProductCategoryNameStartsWith(category);
+		}
 	
-	
-	
+	    @GetMapping("/product/subcategory/{subcategory}")
+		public List<Product> getProductSubCategoryNameStartsWith(@PathVariable String subcategory){
+	    	System.out.println(subcategory);
+			return productClient.getProductSubCategoryNameStartsWith(subcategory);
+		}
+	    
+		@GetMapping("/product/verified")
+		public void getverifiedProduct()
+		{
+			List<Product> verifiedProduct = this.verifyProduct();
+			for(Product prod:verifiedProduct)
+			{
+				prod.setVerification(true);
+				productClient.verifyProduct(prod);
+				
+			}
+			
+		}
 	
 	
 	

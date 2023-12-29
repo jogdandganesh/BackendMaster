@@ -162,12 +162,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getProductBySubCategory(String subcategory) {
 		List<Product> productList = productRepository.findBySubCategoryLike(subcategory+"%");
-		if (!productList.isEmpty())
+		if (!productList.isEmpty()) {
 			for (Product product : productList) {
 				if (product != null && product.getVerification() == true)
 					return productList;
 			}
-		return new ArrayList<>();
+		}
+			return new ArrayList<>();
 	}
 
 }
