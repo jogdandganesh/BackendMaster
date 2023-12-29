@@ -21,7 +21,12 @@ public class User {
 	private int userId;
 	private Long mobileNo;
 	private String email;
-	private List<Integer> orderIds;
+	
+	@OneToMany
+	private List<Order> orderList;
+	
+	@OneToMany
+	private Cart cart;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private transient Address address;

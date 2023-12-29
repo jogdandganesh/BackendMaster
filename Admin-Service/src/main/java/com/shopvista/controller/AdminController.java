@@ -1,6 +1,7 @@
 package com.shopvista.controller;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.introspect.AnnotationCollector;
 import com.shopvista.communication.ProductClient;
 import com.shopvista.communication.UserClient;
-import com.shopvista.dao.CategoryRepository;
+
 import com.shopvista.dto.AddProductsInCategoryDto;
 import com.shopvista.dto.VerifyProductDto;
-import com.shopvista.model.Category;
+
 import com.shopvista.model.Product;
 import com.shopvista.model.User;
 import com.shopvista.service.AdminService;
@@ -63,29 +65,6 @@ public class AdminController {
 		return userClient.getAllUsers();
 	}
 	
-	//========================****Category Work****=======================================================
-	//API Working
-	@PostMapping("/admin/category")
-	public ResponseEntity<String> addCategory(@RequestBody Category category)
-	{
-		String msg =adminService.addCategory(category);
-		return ResponseEntity.status(HttpStatus.CREATED).body(msg);
-	}
-	
-	//API Working
-	@GetMapping("admin/categories/")
-	public ResponseEntity<List<Category>> getCategory(){
-		List<Category> categoryList=adminService.getCategory();
-		return ResponseEntity.status(HttpStatus.OK).body(categoryList);
-	}
-	
-	//API Working
-	@DeleteMapping("admin/category/{categoryId}")
-	public ResponseEntity<String> deleteCategory(@PathVariable int categoryId)
-	{
-		String msg=adminService.deleteCategory(categoryId);
-		return ResponseEntity.status(HttpStatus.OK).body(msg);
-	}
 	
 	
 	//=========================================****Product Works****=====================================
@@ -102,22 +81,45 @@ public class AdminController {
 	}
 	
 	//API Working
-	@GetMapping("/products/{productCategory}")
-	public ResponseEntity<List<Product>> sortProductByCategoeyWise(@PathVariable String productCategory)
+	@GetMapping("/products/{categoryName}")
+	public ResponseEntity<List<Product>> sortProductByCategoeyWise(@PathVariable String categoryName)
 	{
-		List<Product> allProductByCategory = productClient.getAllProductByCategory(productCategory);
+		List<Product> allProductByCategory = productClient.getAllProductByCategory(categoryName);
 		return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
 	}
 	
 	//API Working
-	@GetMapping("/products/category")
-	public ResponseEntity<Category> addProductsInCategory(@RequestBody Category category)
-	{
-	List<Product> allProductByCategory = productClient.getAllProductByCategory(category.getCategoryName());
-		category.setProductList(allProductByCategory);
+		@GetMapping("/product/{subCategory}")
+		public ResponseEntity<List<Product>> sortProductBySubCategoeyWise(@PathVariable String subCategory)
+		{
+			List<Product> allProductByCategory = productClient.getALlProductBySubCategory(subCategory);
+			return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
+		}
+	//API Working
+		@GetMapping("product/verify")
+		public List<Product> verifyProduct()
+		{
+			List<Product> productList = productClient.getAllProduct();
+			System.out.println(productList);
+			List<Product> verifiedList = productList.stream().filter(p->(p.getProductDescription().getProductBrand()!=null && !p.getProductDescription().getProductBrand().isEmpty() )
+					&& (p.getProductDescription().getProductColor()!=null && !p.getProductDescription().getProductColor().isEmpty() ) &&  (p.getProductDescription().getProductSize()!=null && !p.getProductDescription().getProductSize().isEmpty())
+					&& p.getAvailability()==true && p.getProductPrice()!=0.0d).collect(Collectors.toList());
+			
+			return verifiedList;
+		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(category);
-	}
+		//API Working
+		@GetMapping("/product/verified")
+		public List<Product> getverifiedProduct()
+		{
+			List<Product> verifiedProduct = this.verifyProduct();
+			for(Product prod:verifiedProduct)
+			{
+				prod.setVerification(true);
+			}
+			return verifiedProduct;
+		}
+		
 	
 	
 	
