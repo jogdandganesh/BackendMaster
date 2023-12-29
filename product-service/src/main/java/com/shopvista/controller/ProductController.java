@@ -26,28 +26,16 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	// get product
-	// ........................................................................
 	@GetMapping("/{ProductId}")
-	public ResponseEntity<Object> getProduct(@PathVariable int ProductId) {
+	public Product getProduct(@PathVariable int ProductId) {
 		Product product = productService.getProduct(ProductId);
-		if (product != null) {
-			return new ResponseEntity<Object>(product, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Object>("ProductId is not Found" + ProductId, HttpStatus.BAD_REQUEST);
-		}
+		return product;
 	}
-
-	// delete product
-	// .........................................................................
 
 	@DeleteMapping("/{ProductId}")
 	public ResponseEntity<Product> deleteProduct(@PathVariable int ProductId) {
 		return new ResponseEntity<Product>(productService.deleteProduct(ProductId), HttpStatus.OK);
 	}
-
-	// update product
-	// .............................................................................
 
 	@PutMapping("/product")
 	public ResponseEntity<Object> updateProduct(@RequestBody ProductDTO product) {
@@ -55,23 +43,17 @@ public class ProductController {
 		return new ResponseEntity<Object>("Product Status Updated", HttpStatus.ACCEPTED);
 	}
 
-	// productDTO.....................................................................
 	@PostMapping("/product")
 	public ResponseEntity<Object> saveProduct(@RequestBody ProductDTO product) {
 		Object productData = productService.saveProduct(product);
 		return ResponseEntity.status(HttpStatus.FOUND).body(productData);
 	}
 
-	// get all product.............................................................
 	@GetMapping("/products")
 	public List<Product> getAllProduct() {
 		return productService.getAllProduct();
 
 	}
-
-	
-
-	//Product_Category here......................................................................
 
 	@GetMapping("/product/category/{categoryName}")
 	public List<Product> getAllProductByCategory(@PathVariable String categoryName) {
@@ -80,8 +62,8 @@ public class ProductController {
 
 	@GetMapping("/product/{subCategory}")
 	public List<Product> getALlProductBySubCategory(@PathVariable String subCategory) {
-				List<Product> subcategoryList = productService.findProductBySubCategory(subCategory);
-				return subcategoryList;
+		List<Product> subcategoryList = productService.findProductBySubCategory(subCategory);
+		return subcategoryList;
 	}
 
 	@GetMapping("/products/{name}")
@@ -89,15 +71,28 @@ public class ProductController {
 		List<Product> productList = productService.getProductByName(name);
 		return ResponseEntity.status(HttpStatus.OK).body(productList);
 	}
-	
-	
-	//Product_Verification here..................................................................................
-	@PostMapping("/verify/{productId}")
-	public ResponseEntity<String> productVerification(@PathVariable int productId){
-		String message = productService.verifyProduct(productId);
-		return ResponseEntity.status(HttpStatus.OK).body(message);
+
+	@PutMapping("/verify/product")
+	public Product verifyProduct(@RequestBody Product product) {
+		Product verifiedProduct = productService.verifyProduct(product);
+		return verifiedProduct;
 	}
-	
-	
-	
+
+	@GetMapping("/product/name/{ch}")
+	public List<Product> getProductByNameStartsWith(@PathVariable String ch) {
+		List<Product> productList = productService.getProductByCharStartsWith(ch);
+		return productList;
+	}
+
+	@GetMapping("/products/category/{category}")
+	public List<Product> getProductCategoryNameStartsWith(@PathVariable String category) {
+		List<Product> productListBySubcategory = productService.getProductByCategoryNameStartsWith(category);
+		return productListBySubcategory;
+	}
+
+	@GetMapping("/subcategory/{subcategory}")
+	public List<Product> getProductSubCategoryNameStartsWith(@PathVariable String subcategory) {
+		List<Product> productBySubCategory = productService.getProductBySubCategory(subcategory);
+		return productBySubCategory;
+	}
 }

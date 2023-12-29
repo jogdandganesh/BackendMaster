@@ -30,7 +30,6 @@ public class Product {
 	 //private List<ProductImages> imageList;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name = "description_Id")
 	private ProductDescription productDescription;
 	
 
