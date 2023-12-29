@@ -84,12 +84,7 @@ public class ProductServiceImpl implements ProductService {
 			}
 		return new ArrayList<>();
 
-		List<Product> list = productRepository.findAll();
-		System.out.println(list);
 		
-		return list;
-
-
 	}
 
 	public List<Product> getProductsByCategory(String categoryName) {
