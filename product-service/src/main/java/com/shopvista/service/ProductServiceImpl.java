@@ -84,12 +84,7 @@ public class ProductServiceImpl implements ProductService {
 			}
 		return new ArrayList<>();
 
-		List<Product> list = productRepository.findAll();
-		System.out.println(list);
 		
-		return list;
-
-
 	}
 
 	public List<Product> getProductsByCategory(String categoryName) {
@@ -99,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
 		if (!categoryList.isEmpty()) {
 			for (Product product : categoryList) {
 				if (product != null && product.getVerification() == true)
-					;
+					
 				return categoryList;
 			}
 		}
