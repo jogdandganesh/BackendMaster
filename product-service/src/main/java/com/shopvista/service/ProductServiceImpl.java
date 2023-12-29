@@ -92,7 +92,7 @@ public class ProductServiceImpl implements ProductService {
 		if (!categoryList.isEmpty()) {
 			for (Product product : categoryList) {
 				if (product != null && product.getVerification() == true)
-					;
+					
 				return categoryList;
 			}
 		}

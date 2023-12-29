@@ -39,6 +39,7 @@ public class ProductController {
 
 	@PutMapping("/product")
 	public ResponseEntity<Object> updateProduct(@RequestBody ProductDTO product) {
+
 		productService.saveProduct(product);
 		return new ResponseEntity<Object>("Product Status Updated", HttpStatus.ACCEPTED);
 	}
@@ -95,4 +96,7 @@ public class ProductController {
 		List<Product> productBySubCategory = productService.getProductBySubCategory(subcategory);
 		return productBySubCategory;
 	}
+	
+	
+	
 }
