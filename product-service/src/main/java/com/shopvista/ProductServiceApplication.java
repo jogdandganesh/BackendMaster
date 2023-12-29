@@ -15,6 +15,7 @@ import com.shopvista.dao.ProductRepository;
 //@EnableJpaRepositories
 @SpringBootApplication
 @EntityScan("com.shopvista.model")
+@EnableFeignClients
 public class ProductServiceApplication {
 
 	public static void main(String[] args) {

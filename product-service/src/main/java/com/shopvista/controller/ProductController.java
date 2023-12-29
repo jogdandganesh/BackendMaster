@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shopvista.communication.AdminClient;
 import com.shopvista.dto.ProductDTO;
 import com.shopvista.model.Product;
 import com.shopvista.service.ProductService;
@@ -25,6 +26,8 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private AdminClient adminClient;
 
 	@GetMapping("/{ProductId}")
 	public Product getProduct(@PathVariable int ProductId) {
@@ -39,6 +42,7 @@ public class ProductController {
 
 	@PutMapping("/product")
 	public ResponseEntity<Object> updateProduct(@RequestBody ProductDTO product) {
+
 		productService.saveProduct(product);
 		return new ResponseEntity<Object>("Product Status Updated", HttpStatus.ACCEPTED);
 	}
@@ -46,6 +50,7 @@ public class ProductController {
 	@PostMapping("/product")
 	public ResponseEntity<Object> saveProduct(@RequestBody ProductDTO product) {
 		Object productData = productService.saveProduct(product);
+		adminClient.getverifiedProduct();
 		return ResponseEntity.status(HttpStatus.FOUND).body(productData);
 	}
 
@@ -95,4 +100,7 @@ public class ProductController {
 		List<Product> productBySubCategory = productService.getProductBySubCategory(subcategory);
 		return productBySubCategory;
 	}
+	
+	
+	
 }
