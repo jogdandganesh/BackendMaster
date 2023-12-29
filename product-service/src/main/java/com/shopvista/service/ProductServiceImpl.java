@@ -75,6 +75,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAllProduct() {
+
 		List<Product> productList = productRepository.findAll();
 		if (!productList.isEmpty())
 			for (Product product : productList) {
@@ -82,6 +83,12 @@ public class ProductServiceImpl implements ProductService {
 					return productList;
 			}
 		return new ArrayList<>();
+
+		List<Product> list = productRepository.findAll();
+		System.out.println(list);
+		
+		return list;
+
 
 	}
 

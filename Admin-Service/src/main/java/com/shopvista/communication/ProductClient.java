@@ -20,4 +20,9 @@ public interface ProductClient {
 	
 	@GetMapping("/product/category/{productCategory}")
 	public  List<Product> getAllProductByCategory(@PathVariable String productCategory);
+	
+	@GetMapping("/product/{subCategory}")
+	public List<Product> getALlProductBySubCategory(@PathVariable String subCategory);
+	
+	
 }
