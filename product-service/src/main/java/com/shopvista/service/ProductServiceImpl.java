@@ -1,24 +1,18 @@
 package com.shopvista.service;
 
 import java.util.ArrayList;
-
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.shopvista.dao.ProductRepository;
 import com.shopvista.dto.ProductDTO;
-
 import com.shopvista.model.Manufacturer;
 import com.shopvista.model.Product;
 import com.shopvista.model.ProductDescription;
-import com.shopvista.model.ProductImages;
 import com.shopvista.model.ReturnProduct;
 import com.shopvista.model.Review;
 
@@ -27,21 +21,19 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
-	
+
 	@Autowired
 	private ModelMapper mapper;
 
 	@Override
 	public Product getProduct(int ProductId) {
 		if (productRepository.existsById(ProductId)) {
-			return productRepository.findById(ProductId).get();
-		} else {
-			return null;
+			Product product = productRepository.findById(ProductId).get();
+			if (product != null && product.getVerification() == true)
+				return product;
 		}
+		return new Product();
 	}
-	
-	//....................................................................................................
 
 	@Override
 	public Product deleteProduct(int ProductId) {
@@ -54,10 +46,6 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 	}
-
-	// ...........................................................................................................
-
-	// ProductDescription......//
 
 	public Object saveProduct(ProductDTO productDescDto) {
 
@@ -87,46 +75,99 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAllProduct() {
-		List<Product> list = productRepository.findAll();
-		System.out.println(list);
-		
-		return list;
 
+		List<Product> productList = productRepository.findAll();
+		if (!productList.isEmpty())
+			for (Product product : productList) {
+				if (product != null && product.getVerification() == true)
+					return productList;
+			}
+		return new ArrayList<>();
 	}
 
 	public List<Product> getProductsByCategory(String categoryName) {
 		List<Product> productList = this.getAllProduct();
-		List<Product> categoryList = productList.stream().filter(p->p.getCategoryName().equals(categoryName)).collect(Collectors.toList());
-        return categoryList;
+		List<Product> categoryList = productList.stream().filter(p -> p.getCategoryName().equals(categoryName))
+				.collect(Collectors.toList());
+		if (!categoryList.isEmpty()) {
+			for (Product product : categoryList) {
+				if (product != null && product.getVerification() == true)
+					;
+				return categoryList;
+			}
+		}
+		return new ArrayList<>();
 	}
 
 	@Override
 	public List<Product> findProductBySubCategory(String subCategory) {
-		
+
 		List<Product> list = this.getAllProduct();
-		List<Product> subCategoryList = list.stream().filter(p->p.getSubCategory().equals(subCategory)).collect(Collectors.toList());
-		System.out.println(subCategoryList);	
-		return subCategoryList;
+		List<Product> subCategoryList = list.stream().filter(p -> p.getSubCategory().equals(subCategory))
+				.collect(Collectors.toList());
+		if (!subCategoryList.isEmpty()) {
+			for (Product product : subCategoryList) {
+				if (product != null && product.getVerification() == true)
+					;
+				return subCategoryList;
+			}
+		}
+		return new ArrayList<>();
 	}
 
 	@Override
 	public List<Product> getProductByName(String name) {
 		if (productRepository.existsByProductName(name)) {
-			return productRepository.findByProductName(name);
-		} else
-			return new ArrayList<>();
+			List<Product> productList = productRepository.findByProductName(name);
+			if (!productList.isEmpty()) {
+				for (Product product : productList) {
+					if (product != null && product.getVerification() == true)
+						;
+					return productList;
+				}
+			}
+		}
+		return new ArrayList<>();
 	}
 
 	@Override
-	public String verifyProduct(int productId) {
-		if(productRepository.existsById(productId)) {
-			Optional<Product> product = productRepository.findById(productId);
-			product.get().setVerification(true);
-			return "Product Verified Succesfully";
-		}
-		else
-			return "Product is Not verified";
-		
+	public Product verifyProduct(Product product) {
+		Product verifiedProduct = mapper.map(product, Product.class);
+		productRepository.save(verifiedProduct);
+		return verifiedProduct;
+	}
+
+	@Override
+	public List<Product> getProductByCharStartsWith(String ch) {
+		List<Product> productList = productRepository.findByProductNameLike(ch + "%");
+		if (!productList.isEmpty())
+			for (Product product : productList) {
+				if (product != null && product.getVerification() == true)
+					return productList;
+			}
+		return productList;
+	}
+
+	@Override
+	public List<Product> getProductByCategoryNameStartsWith(String category) {
+		List<Product> productList=productRepository.findByCategoryNameLike(category+"%");
+		if (!productList.isEmpty())
+			for (Product product : productList) {
+				if (product != null && product.getVerification() == true)
+					return productList;
+			}
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<Product> getProductBySubCategory(String subcategory) {
+		List<Product> productList = productRepository.findBySubCategoryLike(subcategory+"%");
+		if (!productList.isEmpty())
+			for (Product product : productList) {
+				if (product != null && product.getVerification() == true)
+					return productList;
+			}
+		return new ArrayList<>();
 	}
 
 }

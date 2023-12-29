@@ -21,6 +21,12 @@ public interface ProductService {
 
 	List<Product> getProductByName(String name);
 
-	public	String verifyProduct(int productId);
+	Product verifyProduct(Product product);
+
+	List<Product> getProductByCharStartsWith(String ch);
+
+	List<Product> getProductByCategoryNameStartsWith(String category);
+
+	List<Product> getProductBySubCategory(String subcategory);
 
 }
