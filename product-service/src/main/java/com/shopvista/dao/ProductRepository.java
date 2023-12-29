@@ -10,10 +10,14 @@ import com.shopvista.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-   //public List<ProductDTO> findByProductCategory(String productCategory);
-
-	public boolean existsByProductName(String name);
+   public boolean existsByProductName(String name);
 
 	public List<Product> findByProductName(String name);
+	
+	public List<Product> findByProductNameLike(String ch);
+
+	public List<Product> findByCategoryNameLike(String category);
+	
+	public List<Product> findBySubCategoryLike(String subCategory);
 
 }
