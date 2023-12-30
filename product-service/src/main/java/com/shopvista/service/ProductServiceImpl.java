@@ -63,18 +63,22 @@ public class ProductServiceImpl implements ProductService {
 			ReturnProduct returnProduct = mapper.map(productDescDto, ReturnProduct.class);
 
 			product.setManufacturer(manufacturer);
-			
+
 			product.setProductDescription(productDescription);
-			
-			Product verifiedProduct = adminClient.getVerifiedProduct(product);
-			if(verifiedProduct !=null) {
+
+			Product verifiedProduct = adminClient.getverifiedProduct(product);
+
+			if (verifiedProduct != null) {
+
+				System.out.println(verifiedProduct);
+
 				productRepository.save(verifiedProduct);
-				System.out.println(product);
+
 				return verifiedProduct;
 			}
-			}
-		
-			return "Product Fields Are Empty";
+		}
+
+		return "Product Fields Are Empty";
 	}
 
 	@Override
@@ -166,14 +170,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getProductBySubCategory(String subcategory) {
-		List<Product> productList = productRepository.findBySubCategoryLike(subcategory+"%");
+		List<Product> productList = productRepository.findBySubCategoryLike(subcategory + "%");
 		if (!productList.isEmpty()) {
 			for (Product product : productList) {
 				if (product != null && product.getVerification() == true)
 					return productList;
 			}
 		}
-			return new ArrayList<>();
+		return new ArrayList<>();
 	}
 
 }

@@ -84,7 +84,7 @@ public class AdminController {
 	}
 	
 	   @GetMapping("/product/{subCategory}")
-		public ResponseEntity<List<Product>> sortProductBySubCategoeyWise(@PathVariable String subCategory){
+		public ResponseEntity<List<Product>> sortProductBySubCategoryWise(@PathVariable String subCategory){
 			List<Product> allProductByCategory = productClient.getALlProductBySubCategory(subCategory);
 			return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
 		}
