@@ -77,6 +77,59 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);
 	}
 
+	
+	   @GetMapping("/product/{subCategory}")
+		public ResponseEntity<List<Product>> sortProductBySubCategoryWise(@PathVariable String subCategory){
+			List<Product> allProductByCategory = productClient.getALlProductBySubCategory(subCategory);
+			return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);		
+		}
+	    
+		@PostMapping("product/verify")
+		public Product verifyProduct(@RequestBody Product p){
+			
+			if(
+			((p.getProductDescription().getProductBrand()!=null && !p.getProductDescription().getProductBrand().isEmpty() )
+					&& (p.getProductDescription().getProductColor()!=null && !p.getProductDescription().getProductColor().isEmpty() ) &&  (p.getProductDescription().getProductSize()!=null && !p.getProductDescription().getProductSize().isEmpty())
+					&& p.getAvailability()==true && p.getProductPrice()!=0.0d))
+             {
+	           p.setVerification(true);
+	           return p;
+             }
+			else
+				
+			return new Product();
+			}
+		
+		@GetMapping("admin/product/{productId}")
+		public ResponseEntity<Object> getProductByProductId(@PathVariable int productId){
+			
+			return productClient.getProduct(productId);
+		}
+		
+		@DeleteMapping("/product/{productId}")
+		public ResponseEntity<Product> deleteProductByProductId(@PathVariable int productId) {
+			
+			return productClient.deleteProduct(productId);
+			
+		}
+		
+		@GetMapping("admin/products/{name}")
+		public ResponseEntity<List<Product>> getProductByName(@PathVariable String name){
+			
+			return productClient.getProductByNameLike(name);
+		}
+		
+		@GetMapping("/product/character/{ch}")
+		public List<Product> getProductByNameStartsWith(@PathVariable String ch){
+			return productClient.getProductByNameStartsWith(ch);
+		}
+		
+		@GetMapping("/product/category/{category}")
+		public List<Product> getProductCategoryNameStartsWith(@PathVariable String category){
+			System.out.println(category);
+			return  productClient.getProductCategoryNameStartsWith(category);
+
+      
 	@GetMapping("/product/{subCategory}")
 	public ResponseEntity<List<Product>> sortProductBySubCategoeyWise(@PathVariable String subCategory) {
 		List<Product> allProductByCategory = productClient.getALlProductBySubCategory(subCategory);
@@ -89,6 +142,7 @@ public class AdminController {
 				&& product.getProductDescription().getProductBrand()!=null && product.getProductDescription().getProductSize()!=null
 				&& product.getProductPrice()>=0) {
 			return product;
+
 		}
 		else
 			return null;

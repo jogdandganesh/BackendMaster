@@ -66,10 +66,18 @@ public class ProductServiceImpl implements ProductService {
 
 			product.setProductDescription(productDescription);
 
+
+			Product verifiedProduct = adminClient.getverifiedProduct(product);
+
+			if (verifiedProduct != null) {
+
+				System.out.println(verifiedProduct);
+
 			Product verifiedProduct = adminClient.getVerifiedProduct(product);
 			if (verifiedProduct != null) {
+
 				productRepository.save(verifiedProduct);
-				System.out.println(product);
+
 				return verifiedProduct;
 			}
 		}
