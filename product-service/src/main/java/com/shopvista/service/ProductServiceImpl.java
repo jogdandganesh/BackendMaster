@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shopvista.communication.AdminClient;
 import com.shopvista.dao.ProductRepository;
 import com.shopvista.dto.ProductDTO;
 import com.shopvista.model.Manufacturer;
@@ -21,7 +22,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-
+	@Autowired
+	private AdminClient adminClient;
 	@Autowired
 	private ModelMapper mapper;
 
@@ -61,9 +63,12 @@ public class ProductServiceImpl implements ProductService {
 			ReturnProduct returnProduct = mapper.map(productDescDto, ReturnProduct.class);
 
 			product.setManufacturer(manufacturer);
+			
 			product.setProductDescription(productDescription);
-
-			productRepository.save(product);
+			
+			Product verifiedProduct = adminClient.verifyProduct(product);
+			
+			productRepository.save(verifiedProduct);
 
 			System.out.println(product);
 
@@ -83,6 +88,7 @@ public class ProductServiceImpl implements ProductService {
 					return productList;
 			}
 		return new ArrayList<>();
+
 	}
 
 	public List<Product> getProductsByCategory(String categoryName) {
@@ -92,8 +98,8 @@ public class ProductServiceImpl implements ProductService {
 		if (!categoryList.isEmpty()) {
 			for (Product product : categoryList) {
 				if (product != null && product.getVerification() == true)
-					
-				return categoryList;
+
+					return categoryList;
 			}
 		}
 		return new ArrayList<>();
@@ -150,7 +156,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getProductByCategoryNameStartsWith(String category) {
-		List<Product> productList=productRepository.findByCategoryNameLike(category+"%");
+		List<Product> productList = productRepository.findByCategoryNameLike(category + "%");
 		if (!productList.isEmpty())
 			for (Product product : productList) {
 				if (product != null && product.getVerification() == true)

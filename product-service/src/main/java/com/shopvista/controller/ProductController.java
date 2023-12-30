@@ -50,7 +50,7 @@ public class ProductController {
 	@PostMapping("/product")
 	public ResponseEntity<Object> saveProduct(@RequestBody ProductDTO product) {
 		Object productData = productService.saveProduct(product);
-		adminClient.getverifiedProduct();
+		
 		return ResponseEntity.status(HttpStatus.FOUND).body(productData);
 	}
 
@@ -101,6 +101,6 @@ public class ProductController {
 		return productBySubCategory;
 	}
 	
-	
+
 	
 }
