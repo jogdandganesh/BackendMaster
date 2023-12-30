@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shopvista.OrderServiceApplication;
 import com.shopvista.dto.PlaceOrderDTO;
 import com.shopvista.model.Order;
+import com.shopvista.model.Product;
 import com.shopvista.service.OrdersService;
 
 import ch.qos.logback.core.status.Status;
@@ -79,9 +80,14 @@ public class OrdersController {
 	@PostMapping("/order")
 	public ResponseEntity<Order> placeOrder(@RequestBody PlaceOrderDTO order)
 	{
+		System.out.println("____________________________________________________________________");
 		Order orders=orderService.placeOrder(order);
 		return ResponseEntity.status(HttpStatus.CREATED).body(orders);
 	}
 	
+	@GetMapping("/products/{orderId}")
+	public ResponseEntity<List<Product>> geatProductsByOrderId(@PathVariable int orderId) {
+		return new ResponseEntity<List<Product>>(orderService.getAllProductsByOrderId(orderId),HttpStatus.OK);
+	}
 	
 }
