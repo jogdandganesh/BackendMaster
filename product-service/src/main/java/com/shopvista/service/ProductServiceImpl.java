@@ -70,9 +70,9 @@ public class ProductServiceImpl implements ProductService {
 			
 			productRepository.save(verifiedProduct);
 
-			System.out.println(product);
+			System.out.println(verifiedProduct);
 
-			return product;
+			return verifiedProduct;
 
 		} else
 			return "Product Fields Are Empty";
