@@ -19,5 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	public List<Product> findByCategoryNameLike(String category);
 	
 	public List<Product> findBySubCategoryLike(String subCategory);
+	
 
 }

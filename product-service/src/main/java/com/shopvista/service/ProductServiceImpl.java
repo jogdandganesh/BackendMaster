@@ -66,13 +66,12 @@ public class ProductServiceImpl implements ProductService {
 			
 			product.setProductDescription(productDescription);
 			
-			Product verifiedProduct = adminClient.verifyProduct(product);
-			
-			productRepository.save(verifiedProduct);
-
-			System.out.println(product);
-
-			return product;
+			Product verifiedProduct = adminClient.getVerifiedProduct(product);
+			if(verifiedProduct !=null) {
+				productRepository.save(verifiedProduct);
+				System.out.println(product);
+			}
+			return verifiedProduct;
 
 		} else
 			return "Product Fields Are Empty";
@@ -176,5 +175,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 			return new ArrayList<>();
 	}
+
+
 
 }

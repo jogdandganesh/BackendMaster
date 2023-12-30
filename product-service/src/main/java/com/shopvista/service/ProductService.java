@@ -29,6 +29,7 @@ public interface ProductService {
 
 	List<Product> getProductBySubCategory(String subcategory);
 
-//	List<Product> getProductByPricewise(double minPrice, double maxPrice);
+	
+
 
 }
