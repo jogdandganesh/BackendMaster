@@ -38,11 +38,6 @@ public class Product {
 	
     @OneToMany(cascade = CascadeType.ALL)
  	private List<Review> review;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-    private List<ReturnProduct> returnProduct;
-    
-	
-	
+
 	
 }

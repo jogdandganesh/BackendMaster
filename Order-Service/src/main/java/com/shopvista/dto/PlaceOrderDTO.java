@@ -16,6 +16,8 @@ public class PlaceOrderDTO {
 	private int userId;
 
 	private List<Integer> prodIds;
+	
+	private int quantity;
 
 	private int paymentId;
 	
@@ -27,8 +29,6 @@ public class PlaceOrderDTO {
 	
 	private String details;
 	
-	private String productSize;
 	
-	private Boolean availability;
 
 }

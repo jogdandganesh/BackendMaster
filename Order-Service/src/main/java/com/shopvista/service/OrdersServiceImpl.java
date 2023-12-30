@@ -2,15 +2,19 @@ package com.shopvista.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import com.shopvista.communication.ProductClient;
 import com.shopvista.dao.OrderRepository;
 import com.shopvista.dao.PaymentRepository;
 import com.shopvista.dto.PlaceOrderDTO;
 import com.shopvista.model.Order;
 import com.shopvista.model.Payment;
+import com.shopvista.model.Product;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -21,7 +25,10 @@ public class OrdersServiceImpl implements OrdersService {
 	@Autowired
 	private PaymentRepository paymentRepository;
 	
-	
+
+	@Autowired
+    private ProductClient productClient;
+    
 	
 
 	@Override
@@ -62,7 +69,21 @@ public class OrdersServiceImpl implements OrdersService {
 
 		Order order = new Order();
 		order.setUserId(orderDto.getUserId());
-		order.setProductIds(orderDto.getProdIds());
+		
+		List<Product> list = productClient.getAllProduct();
+		
+		 List<Product> orderProductList = list.stream().filter( product -> {
+		       for(int id : orderDto.getProdIds()) {
+		    	   if(product.getProductId()==id)
+		    		   return true;
+		    	   break;
+		       }
+		       return false;
+		       
+		}).collect(Collectors.toList());
+		
+		order.setProductList(orderProductList);
+		
 
 		Payment payment = new Payment();
 		payment.setPaymentMode(orderDto.getPaymentMode());
@@ -70,10 +91,21 @@ public class OrdersServiceImpl implements OrdersService {
 		payment.setTotalAmmount(orderDto.getTotalAmmount());
 
 		order.setPayment(payment);
-
+        order.setQuantity(orderDto.getQuantity());
 		orderRepository.save(order);
 
 		return order;
+	}
+
+	@Override
+	public List<Product> getAllProductsByOrderId(int orderId) {
+//		try {
+			return orderRepository.findById(orderId).get().getProductList();
+//		} catch (Exception e) {
+//			return ;
+//		}
+		
+		 
 	}
 
 }

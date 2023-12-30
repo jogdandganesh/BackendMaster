@@ -2,12 +2,17 @@ package com.shopvista.communication;
 
 import java.util.List;
 
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 import com.shopvista.model.Product;
 
@@ -23,6 +28,32 @@ public interface ProductClient {
 	
 	@GetMapping("/product/{subCategory}")
 	public List<Product> getALlProductBySubCategory(@PathVariable String subCategory);
+	
+	@GetMapping("/{ProductId}")
+	public ResponseEntity<Object> getProduct(@PathVariable int ProductId);
+	
+	@DeleteMapping("/{ProductId}")
+	public ResponseEntity<Product> deleteProduct(@PathVariable int ProductId);
+	
+//	@PutMapping("/product")
+//	public ResponseEntity<Object> updateProduct(@RequestBody ProductDTO product);
+	
+	@GetMapping("/products/{name}")
+	public ResponseEntity<List<Product>> getProductByNameLike(@PathVariable String name);
+	
+	@PutMapping("/verify/product")
+	public Product verifyProduct(@RequestBody Product product);
+	
+	@GetMapping("/product/name/{ch}")
+	public List<Product> getProductByNameStartsWith(@PathVariable String ch);
+	
+	@GetMapping("/products/category/{category}")
+	public List<Product> getProductCategoryNameStartsWith(@PathVariable String category);
+	
+	@GetMapping("/subcategory/{subcategory}")
+	public List<Product> getProductSubCategoryNameStartsWith(@PathVariable String subcategory);
+	
+	
 	
 	
 }
