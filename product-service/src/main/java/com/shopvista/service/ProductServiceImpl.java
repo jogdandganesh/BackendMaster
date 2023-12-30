@@ -70,10 +70,10 @@ public class ProductServiceImpl implements ProductService {
 			if(verifiedProduct !=null) {
 				productRepository.save(verifiedProduct);
 				System.out.println(product);
+				return verifiedProduct;
 			}
-			return verifiedProduct;
-
-		} else
+			}
+		
 			return "Product Fields Are Empty";
 	}
 
@@ -175,7 +175,5 @@ public class ProductServiceImpl implements ProductService {
 		}
 			return new ArrayList<>();
 	}
-
-
 
 }
