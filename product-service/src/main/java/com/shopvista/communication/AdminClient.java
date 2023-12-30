@@ -11,6 +11,6 @@ import com.shopvista.model.Product;
 public interface AdminClient {
 	
 	@PostMapping("/product/verify")
-	public Product verifyProduct(@RequestBody Product product);
+	public Product getVerifiedProduct(@RequestBody Product product);
 
 }
