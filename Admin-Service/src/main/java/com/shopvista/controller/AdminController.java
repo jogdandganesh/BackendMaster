@@ -83,28 +83,26 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(allProductByCategory);
 	}
 
-	public Product verifyProduct(Product p) {
-
-		if (((p.getProductDescription().getProductBrand() != null
-				&& !p.getProductDescription().getProductBrand().isEmpty())
-				&& (p.getProductDescription().getProductColor() != null
-						&& !p.getProductDescription().getProductColor().isEmpty())
-				&& (p.getProductDescription().getProductSize() != null
-						&& !p.getProductDescription().getProductSize().isEmpty())
-				&& p.getAvailability() == true && p.getProductPrice() != 0.0d)) {
-
-			return p;
-
-		} else
-
+	public Product verifyProduct(Product product){
+		if(product.getProductName()!=null && product.getProductDescription().getProductBrand()!=null
+				&& product.getAvailability()!=null && product.getVerification()==false
+				&& product.getProductDescription().getProductBrand()!=null && product.getProductDescription().getProductSize()!=null
+				&& product.getProductPrice()>=0) {
+			return product;
+		}
+		else
 			return null;
 	}
-
-	@PostMapping("product/verify")
-		public Product getVerifiedProduct(@RequestBody Product product) {
-			Product verifiedProduct = this.verifyProduct(product);
-			verifiedProduct.setVerification(true);)
-			return verifiedProduct;
+	
+	//API Working
+	@PostMapping("/product/verified")
+	public Product getverifiedProduct(@RequestBody Product product)
+	{
+		Product verifiedProduct = this.verifyProduct(product);
+		
+		verifiedProduct.setVerification(true);
+	
+		return verifiedProduct;
 	}
 
 	@GetMapping("admin/product/{productId}")
